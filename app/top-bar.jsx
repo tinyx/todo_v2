@@ -5,7 +5,7 @@ const TopBar = () => (
   <AppBar 
     title="Todo List v2"
     style={{
-      'zIndex': '10000'
+      zIndex: '10000'
     }}
     />
 );
