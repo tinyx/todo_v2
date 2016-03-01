@@ -15,7 +15,9 @@
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
-    "babel-loader": "^6.2.4"
+    "babel-loader": "^6.2.4",
+    "material-ui": "^0.15.0-alpha.1",
+    "react-tap-event-plugin": "^0.2.2"
   },
   "scripts": {
     "build": "webpack",
