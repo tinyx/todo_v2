@@ -5,8 +5,8 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 import DashBoard from 'material-ui/lib/svg-icons/action/dashboard';
-import NoteAdd from 'material-ui/lib/svg-icons/action/note-add';
-import TextField from 'material-ui/lib/text-field';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
 var ClassNav = React.createClass({
   propTypes: {
@@ -32,12 +32,10 @@ var ClassNav = React.createClass({
     classesLabel: {
       cursor: 'default'
     },
-    addClassLabel: {
-      cursor: 'default'
-    },
-    addClassTextField: {
-      width: '160px',
-      paddingLeft: '30px'
+    addClassButton: {
+      position: 'absolute',
+      right: '20px',
+      bottom: '20px'
     }
   },
 
@@ -73,23 +71,9 @@ var ClassNav = React.createClass({
             primaryText={className}
           ></MenuItem>
         ))}
-        <Divider style={{marginTop: '10px'}}/>
-        <ListItem 
-          primaryText="Add Class" 
-          leftIcon={<NoteAdd />} 
-          disabled={true}
-          style={this.styles.addClassLabel}
-        />
-        <ListItem 
-          primaryText="Class Name" 
-          disabled={true}
-          secondaryText={[
-            <TextField 
-              hintText="Input Class Name"
-              style={this.styles.addClassTextField}
-             />             
-          ]}
-        />
+        <FloatingActionButton mini={true} secondary={true} style={this.styles.addClassButton}>
+          <ContentAdd />
+        </FloatingActionButton>
       </LeftNav>
     )
   }
