@@ -1,26 +1,28 @@
 import { combineReducers } from 'redux'
 import { 
-  ADD_CLASS, REMOVE_CLASS, ADD_TODO
-  EDIT_TODO, COMPLETE_TODO, REMOVE_TODO,
+  GET_CLASSES, SELECT_CLASS, ADD_CLASS, REMOVE_CLASS,
+  GET_TODOS, ADD_TODO, EDIT_TODO, COMPLETE_TODO, REMOVE_TODO,
   SET_VISIBILITY_FILTER, VisibilityFilters } from './actions'
 const { SHOW_ALL } = VisibilityFilters
 /*
 store structure:
 {
   visibilityFilter: 'SHOW_ALL',
-  currentClass: 1,
-  classes: [1, 2],
-  classesById: {
-    1: {
-      text: 'Class 1',
-      todos: [1, 2]
-    }
-    2: {
-      text: 'Class 2',
-      todos: [3]
+  classes: {
+    currentClass: 1,
+    classesIdList: [1, 2],
+    classesById: {
+      1: {
+        text: 'Class 1',
+        todos: [1, 2]
+      }
+      2: {
+        text: 'Class 2',
+        todos: [3]
+      }
     }
   },
-  todosById: {
+  todos: {
     1: {
       text: 'I wanna finish this website',
       endDate: '2016-12-31',
@@ -47,43 +49,48 @@ function visibilityFilter(state = SHOW_ALL, action) {
   }
 }
 
-function classes(state = [], action) {
+function classes(state = {classesIdList: [], classesById: {}, currentClass: null}, action) {
   switch (action.type) {
-    case ADD_CLASS:
-      return {
-        ...state,
-        classes: [],
-        classesById: {}
-      }
-    case REMOVE_CLASS:
-      return {
-        ...state,
-        classes: [],
-        classById: {}
-      }
-    default:
+    case GET_CLASSES:
       return state
+    case SELECT_CLASS: {
+      console.log(state);
+      var new_state = Object.assign({}, state);
+      new_state.currentClass = action.id;
+      return new_state;
+    }
+    case ADD_CLASS:
+      return state
+    case REMOVE_CLASS:
+      return state
+    default:
+      return {
+        classesIdList: [1, 2],
+        classesById: {
+          1: {
+            text: 'Class 1',
+          },
+          2: {
+            text: 'Class 2',
+          }
+        },
+        currentClass: 1
+      }
   }
 }
 
-function todos(state = [], action) {
+function todos(state = {}, action) {
   switch (action.type) {
+    case GET_TODOS:
+      return state
     case ADD_TODO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false
-        }
-      ]
+      return state
     case COMPLETE_TODO:
-      return [
-        ...state.slice(0, action.index),
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
+      return state
+    case EDIT_TODO:
+      return state
+    case REMOVE_TODO:
+      return state
     default:
       return state
   }
@@ -91,6 +98,7 @@ function todos(state = [], action) {
 
 const todoApp = combineReducers({
   visibilityFilter,
+  classes,
   todos
 })
 

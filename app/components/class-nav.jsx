@@ -7,10 +7,12 @@ import Divider from 'material-ui/lib/divider';
 import DashBoard from 'material-ui/lib/svg-icons/action/dashboard';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import { selectClass } from '../actions'
 
 var ClassNav = React.createClass({
   propTypes: {
-    classNames: React.PropTypes.array.isRequired
+    classes: React.PropTypes.array.isRequired,
+    onClassClick: React.PropTypes.func.isRequired
   },
 
   styles: {
@@ -41,13 +43,13 @@ var ClassNav = React.createClass({
 
   getInitialState: function() {
     return ({
-      classNames: this.props.classNames
+      classes: this.props.classes
     });
   },
   
-  handelChangeClassNames: function(classNames) {
+  handelChangeClassNames: function(classes) {
     this.setState({
-      classNames: classNames
+      classes: classes
     })
   },
 
@@ -64,12 +66,13 @@ var ClassNav = React.createClass({
           style={this.styles.classesLabel}
         />
         <Divider style={{marginBottom: '10px'}}/>
-        {this.state.classNames.map((className) => (
-          <MenuItem
-            key={className}
-            value={className}
-            primaryText={className}
-          ></MenuItem>
+        {this.state.classes.map(c => (
+          <ListItem
+            key={c.id}
+            value={c.id}
+            primaryText={c.text}
+            onClick={() => this.props.onClassClick(c.id)}
+          ></ListItem>
         ))}
         <FloatingActionButton mini={true} secondary={true} style={this.styles.addClassButton}>
           <ContentAdd />
