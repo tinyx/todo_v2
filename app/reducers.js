@@ -51,10 +51,11 @@ function visibilityFilter(state = SHOW_ALL, action) {
 
 function classes(state = {classesIdList: [], classesById: {}, currentClass: null}, action) {
   switch (action.type) {
-    case GET_CLASSES:
+    case GET_CLASSES: {
+      console.log(action);
       return state
+    }
     case SELECT_CLASS: {
-      console.log(state);
       var new_state = Object.assign({}, state);
       new_state.currentClass = action.id;
       return new_state;

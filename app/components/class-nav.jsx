@@ -2,16 +2,21 @@ import React from 'react';
 import LeftNav from 'material-ui/lib/left-nav';
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
+import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 import DashBoard from 'material-ui/lib/svg-icons/action/dashboard';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import { selectClass } from '../actions'
+
+
+let SelectableList = SelectableContainerEnhance(List);
 
 var ClassNav = React.createClass({
   propTypes: {
     classes: React.PropTypes.array.isRequired,
+    currentClass: React.PropTypes.number.isRequired,
     onClassClick: React.PropTypes.func.isRequired
   },
 
@@ -66,14 +71,16 @@ var ClassNav = React.createClass({
           style={this.styles.classesLabel}
         />
         <Divider style={{marginBottom: '10px'}}/>
-        {this.state.classes.map(c => (
-          <ListItem
-            key={c.id}
-            value={c.id}
-            primaryText={c.text}
-            onClick={() => this.props.onClassClick(c.id)}
-          ></ListItem>
-        ))}
+        <SelectableList valueLink={{ value:this.props.currentClass }}>
+          {this.state.classes.map(c => (
+            <ListItem
+              key={c.id}
+              value={c.id}
+              primaryText={c.text}
+              onClick={() => this.props.onClassClick(c.id)}
+            ></ListItem>
+          ))}
+        </SelectableList>
         <FloatingActionButton mini={true} secondary={true} style={this.styles.addClassButton}>
           <ContentAdd />
         </FloatingActionButton>

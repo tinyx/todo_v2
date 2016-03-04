@@ -11,9 +11,7 @@ const mapStateToProps = (state) => {
         text: state.classes.classesById[id].text
       }
     }),
-    valueLink: {
-      value: 1
-    }
+    currentClass: state.classes.currentClass
   }
 }
 
