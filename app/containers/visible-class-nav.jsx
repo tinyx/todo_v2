@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
         text: state.classes.classesById[id].text
       }
     }),
-    currentClass: state.classes.currentClass
+    currentClass: state.classes.classesIdList.indexOf(state.classes.currentClass) + 1
   }
 }
 
