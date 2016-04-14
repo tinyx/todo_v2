@@ -8,7 +8,6 @@
 │   ├─- containers
 │   ├─- routes
 │   ├── components
-│   │   ├── __tests__
 │   │   │   └── AuthenticatedComponent.test.jsx
 │   │   └── AuthenticatedComponent.jsx
 │   ├── constants
@@ -16,8 +15,6 @@
 │   └── utils
 ├── views
 │   ├── Anonymous
-│   │   ├── __tests__
-│   │   │   └── Anonymous.test.jsx
 │   │   ├── views
 │   │   │   ├── Home
 │   │   │   │   ├── __tests__
@@ -28,10 +25,6 @@
 │   │   │       └── Login.jsx
 │   │   └── Anonymous.jsx
 │   └── SignedIn
-│       ├── lib
-│       │   └── components
-│       │       ├── __tests__
-│       │       └── EventsTable.jsx
 │       ├── views
 │       │   └── Dashboard
 │       │       ├── __tests__
