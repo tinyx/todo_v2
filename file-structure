@@ -1,0 +1,44 @@
+.
+├── assets
+│   ├── images
+│   └── sass/less/css
+├── lib
+│   ├── actions
+│   ├─- reducers
+│   ├─- containers
+│   ├─- routes
+│   ├── components
+│   │   ├── __tests__
+│   │   │   └── AuthenticatedComponent.test.jsx
+│   │   └── AuthenticatedComponent.jsx
+│   ├── constants
+│   ├── stores
+│   └── utils
+├── views
+│   ├── Anonymous
+│   │   ├── __tests__
+│   │   │   └── Anonymous.test.jsx
+│   │   ├── views
+│   │   │   ├── Home
+│   │   │   │   ├── __tests__
+│   │   │   │   │   └── Home.test.jsx
+│   │   │   │   └── Home.jsx
+│   │   │   └── Login
+│   │   │       ├── __tests__
+│   │   │       └── Login.jsx
+│   │   └── Anonymous.jsx
+│   └── SignedIn
+│       ├── lib
+│       │   └── components
+│       │       ├── __tests__
+│       │       └── EventsTable.jsx
+│       ├── views
+│       │   └── Dashboard
+│       │       ├── __tests__
+│       │       ├── components
+│       │       │   ├── __tests__
+│       │       │   ├── TodoItem.jsx
+│       │       │   └── TodoList.jsx
+│       │       └── Dashboard.jsx
+│       └── SignedIn.jsx
+└── app.jsx
