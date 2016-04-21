@@ -8,6 +8,7 @@
 │   ├─- containers
 │   ├─- routes
 │   ├── components
+│   │   ├──tests
 │   │   │   └── AuthenticatedComponent.test.jsx
 │   │   └── AuthenticatedComponent.jsx
 │   ├── constants

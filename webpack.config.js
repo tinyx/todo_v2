@@ -1,9 +1,12 @@
 var path = require('path');
 var config = {
-  entry: path.resolve(__dirname, 'app/main.js'),
+  entry: path.resolve(__dirname, 'src/index'),
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
+  },
+  resolve: {
+      extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [
