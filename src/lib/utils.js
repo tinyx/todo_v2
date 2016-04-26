@@ -1,5 +1,5 @@
 export function checkHttpStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status >= 200 && response.status < 300 || response.status === 400) {
     return response
   } else {
     var error = new Error(response.statusText)
@@ -9,7 +9,7 @@ export function checkHttpStatus(response) {
 }
 
 export function parseJSON(response) {
-   return response.json()
+  return response.json();
 }
 
 export function createReducer(initialState, reducerMap) {

@@ -17,10 +17,7 @@ export function loginUserFailure(error) {
   localStorage.removeItem('token');
   return {
     type: LOGIN_USER_FAILURE,
-    payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
-    }
+    payload: error.response
   }
 }
 
@@ -61,11 +58,21 @@ export function loginUser(username, password, redirect="/") {
         let decoded = jwtDecode(response.token);
         dispatch(loginUserSuccess(response.token));
       } catch (e) {
+        let responseDict = {
+          status: 400,
+          statusText: 'Invalid login credentials'
+        };
+        if('username' in response) {
+          responseDict.emailError = response['username'][0];
+        }
+        if('password' in response) {
+          responseDict.passwordError = response['password'][0];
+        }
+        if('non_field_errors' in response) {
+          responseDict.nonFieldError = response['non_field_errors'][0];
+        }
         dispatch(loginUserFailure({
-          response: {
-            status: 403,
-            statusText: 'Invalid token'
-          }
+          response: responseDict
         }));
       }
     })

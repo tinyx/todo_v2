@@ -8,7 +8,9 @@ const HomeView = React.createClass({
     return (
       <div>
         <div>Authenticated: {this.props.isAuthenticated ? 'true' : 'false'}</div>
-        <LoginForm onSubmit={this.props.onSubmit}/>
+        <LoginForm emailError={this.props.emailError} passwordError={this.props.passwordError}
+          nonFieldError={this.props.nonFieldError} isAuthenticating={this.props.isAuthenticating}
+          onSubmit={this.props.onSubmit}/>
       </div>
     );
   }
@@ -20,7 +22,11 @@ HomeView.propTypes = {
 
 export default connect(
   state => ({
-    isAuthenticated: state.auth.isAuthenticated 
+    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticating: state.auth.isAuthenticating,
+    emailError: state.auth.emailError,
+    passwordError: state.auth.passwordError,
+    nonFieldError: state.auth.nonFieldError
   }),
   dispatch => ({
     onSubmit: (email, password) => {
