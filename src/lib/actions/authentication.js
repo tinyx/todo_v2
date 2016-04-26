@@ -1,4 +1,4 @@
-import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, AUTH_URL} from '../constants/authentication';
+import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, AUTH_URL} from '../constants/authentication';
 import {checkHttpStatus, parseJSON} from '../utils';
 import jwtDecode from 'jwt-decode';
 
@@ -31,85 +31,46 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-    localStorage.removeItem('token');
-    return {
-        type: LOGOUT_USER
-    }
-}
-
-export function logoutAndRedirect() {
-    return (dispatch, state) => {
-        dispatch(logout());
-    }
-}
-
-export function loginUser(username, password, redirect="/") {
-    return function(dispatch) {
-        dispatch(loginUserRequest());
-        return fetch(AUTH_URL, {
-              method: 'post',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({username: username, password: password})
-            })
-            .then(checkHttpStatus)
-            .then(parseJSON)
-            .then(response => {
-                try {
-                    let decoded = jwtDecode(response.token);
-                    dispatch(loginUserSuccess(response.token));
-                } catch (e) {
-                    dispatch(loginUserFailure({
-                        response: {
-                            status: 403,
-                            statusText: 'Invalid token'
-                        }
-                    }));
-                }
-            })
-            .catch(error => {
-                dispatch(loginUserFailure(error));
-            })
-    }
-}
-
-export function receiveProtectedData(data) {
-    return {
-        type: RECEIVE_PROTECTED_DATA,
-        payload: {
-            data: data
-        }
-    }
-}
-
-export function fetchProtectedDataRequest() {
+  localStorage.removeItem('token');
   return {
-    type: FETCH_PROTECTED_DATA_REQUEST
+    type: LOGOUT_USER
   }
 }
 
-export function fetchProtectedData(token) {
+export function logoutAndRedirect() {
+  return (dispatch, state) => {
+    dispatch(logout());
+  }
+}
 
-    return (dispatch, state) => {
-        dispatch(fetchProtectedDataRequest());
-        return fetch('http://localhost:3000/getData/', {
-                credentials: 'include',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(checkHttpStatus)
-            .then(parseJSON)
-            .then(response => {
-                dispatch(receiveProtectedData(response.data));
-            })
-            .catch(error => {
-                if(error.response.status === 401) {
-                  dispatch(loginUserFailure(error));
-                  dispatch(pushState(null, '/login'));
-                }
-            })
-       }
+export function loginUser(username, password, redirect="/") {
+  return function(dispatch) {
+    dispatch(loginUserRequest());
+    return fetch(AUTH_URL, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: username, password: password})
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      try {
+        let decoded = jwtDecode(response.token);
+        dispatch(loginUserSuccess(response.token));
+      } catch (e) {
+        dispatch(loginUserFailure({
+          response: {
+            status: 403,
+            statusText: 'Invalid token'
+          }
+        }));
+      }
+    })
+    .catch(error => {
+        dispatch(loginUserFailure(error));
+    })
+  }
 }
