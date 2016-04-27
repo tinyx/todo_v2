@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import LoginForm from '../lib/components/LoginForm';
 import { loginUser } from '../lib/actions/authentication';
 
-const HomeView = React.createClass({
+const LoginView = React.createClass({
+  propTypes: {
+    isAuthenticated: PropTypes.bool.isRequired
+  },
   render() {
     return (
       <div>
@@ -15,10 +18,6 @@ const HomeView = React.createClass({
     );
   }
 });
-
-HomeView.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-};
 
 export default connect(
   state => ({
@@ -33,5 +32,5 @@ export default connect(
       dispatch(loginUser(email, password))
     }
   })
-)(HomeView);
+)(LoginView);
 

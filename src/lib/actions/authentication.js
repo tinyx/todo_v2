@@ -1,6 +1,7 @@
-import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, AUTH_URL} from '../constants/authentication';
-import {checkHttpStatus, parseJSON} from '../utils';
+import { LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, AUTH_URL } from '../constants/authentication';
+import { checkHttpStatus, parseJSON } from '../utils';
 import jwtDecode from 'jwt-decode';
+import { push } from 'react-router-redux'
 
 
 export function loginUserSuccess(token) {
@@ -37,10 +38,11 @@ export function logout() {
 export function logoutAndRedirect() {
   return (dispatch, state) => {
     dispatch(logout());
+    dispatch(push('/login'));
   }
 }
 
-export function loginUser(username, password, redirect="/") {
+export function loginUser(username, password, redirect="/dashboard") {
   return function(dispatch) {
     dispatch(loginUserRequest());
     return fetch(AUTH_URL, {
@@ -57,6 +59,7 @@ export function loginUser(username, password, redirect="/") {
       try {
         let decoded = jwtDecode(response.token);
         dispatch(loginUserSuccess(response.token));
+        dispatch(push(redirect));
       } catch (e) {
         let responseDict = {
           status: 400,

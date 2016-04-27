@@ -56,16 +56,15 @@ const LoginForm = React.createClass({
     this.props.onSubmit(this.state.email, this.state.password);
   },
   render() {
-    console.log(this.props);
     return (
       <div>
         <Paper style={style.paper} zDepth={3}>
           <FontIcon className="material-icons" style={style.fontIcon} color={Colors.grey700}>account_circle</FontIcon>
           <TextField hintText="Email" style={style.textField} 
-            onChange={this.onEmailChange} onEnterKeyDown={this.props.onSubmit}
+            onChange={this.onEmailChange} onEnterKeyDown={this.onSubmit}
             errorText={this.props.emailError}/>
           <TextField hintText="Password" type="password" 
-            onChange={this.onPasswordChange} onEnterKeyDown={this.props.onSubmit}
+            onChange={this.onPasswordChange} onEnterKeyDown={this.onSubmit}
             errorText={this.props.passwordError}/>
           <div style={style.nonFieldError}>{this.props.nonFieldError}</div>
           {this.props.isAuthenticating ? <CircularProgress style={style.circularProgress} size={.7}/> :
