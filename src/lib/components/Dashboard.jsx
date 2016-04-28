@@ -1,10 +1,7 @@
 import React from 'react';
-import TopBar from './TopBar'
+import TopBar from './TopBar';
+import ClassNavBar from './ClassNavBar';
 
-
-const style = {
-
-};
 
 const Dashboard = React.createClass({
   propTypes: {
@@ -14,8 +11,10 @@ const Dashboard = React.createClass({
     return (
       <div>
         <TopBar onLogout={this.props.onLogout}/>
+        <ClassNavBar classes={[{'id': 1, 'text': 'Haha'}, {'id': 2, 'text': 'Hehe'}]}
+          currentClass={1} onClassClick={() => true}/>
       </div>
   )}
-})
+});
 
 export default Dashboard;

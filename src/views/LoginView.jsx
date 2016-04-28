@@ -11,7 +11,6 @@ const LoginView = React.createClass({
   render() {
     return (
       <div>
-        <div>Authenticated: {this.props.isAuthenticated ? 'true' : 'false'}</div>
         <LoginForm emailError={this.props.emailError} passwordError={this.props.passwordError}
           nonFieldError={this.props.nonFieldError} isAuthenticating={this.props.isAuthenticating}
           onSubmit={this.props.onSubmit}/>

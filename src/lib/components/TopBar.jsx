@@ -10,6 +10,11 @@ const TopBar = React.createClass({
   propTypes: {
     onLogout: React.PropTypes.func.isRequired
   },
+  styles: {
+    topBar: {
+      zIndex: '1400'
+    }
+  },
   render() {
     return (
       <AppBar
@@ -27,6 +32,7 @@ const TopBar = React.createClass({
             <MenuItem primaryText="Log out" onTouchTap={this.props.onLogout} />
           </IconMenu>
         }
+        style={this.styles.topBar}
         />
       )
   }
