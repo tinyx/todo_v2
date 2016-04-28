@@ -66,12 +66,18 @@ var ClassNavBar = React.createClass({
       bottom: '20px'
     }
   },
-  getInitialState: function() {
-    return ({
-      classes: this.props.classes
-    });
-  },
   render: function() {
+    var selectedClassId = this.props.currentClass;
+    var classes = this.props.classes;
+    var value = 0;
+    if(selectedClassId !== null && classes.length > 0) {
+      for(var i=0; i<classes.length; i++) {
+        if(classes[i].id === selectedClassId) {
+          value = i;
+          break;
+        }
+      }
+    }
     return (
       <Drawer>
         <div style={this.styles.placeholder}>
@@ -84,12 +90,12 @@ var ClassNavBar = React.createClass({
         />
         <Divider style={{marginBottom: '10px'}}/>
         <SelectableList defaultValue={1}
-          value={{ value:this.props.currentClass }}>
-          {this.state.classes.map(c => (
+          value={value}>
+          {this.props.classes.map(c => (
             <ListItem
               key={c.id}
               value={c.id}
-              primaryText={c.text}
+              primaryText={c.name}
               onClick={() => this.props.onClassClick(c.id)}
             ></ListItem>
           ))}

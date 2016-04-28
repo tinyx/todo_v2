@@ -5,14 +5,16 @@ import ClassNavBar from './ClassNavBar';
 
 const Dashboard = React.createClass({
   propTypes: {
-    onLogout: React.PropTypes.func.isRequired
+    onLogout: React.PropTypes.func.isRequired,
+    classes: React.PropTypes.array.isRequired,
+    onClassClick: React.PropTypes.func.isRequired
   },
   render() {
     return (
       <div>
         <TopBar onLogout={this.props.onLogout}/>
-        <ClassNavBar classes={[{'id': 1, 'text': 'Haha'}, {'id': 2, 'text': 'Hehe'}]}
-          currentClass={1} onClassClick={() => true}/>
+        <ClassNavBar classes={this.props.classes}
+          currentClass={1} onClassClick={this.props.onClassClick}/>
       </div>
   )}
 });

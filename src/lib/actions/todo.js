@@ -10,6 +10,7 @@ import {
   PUT_EVENT_CLASS_DATA_REQUEST,
   DELETE_EVENT_CLASS_DATA_REQUEST,
   RECEIVE_EVENT_CLASS_DATA,
+  SELECT_EVENT_CLASS,
   EVENT_CLASS_URL
 } from '../constants/todo'
 import {loginUserFailure} from '../actions/authentication'
@@ -120,7 +121,7 @@ export function getEventClassData(token) {
     .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
-      dispatch(receiveEventClassData(response.data));
+      dispatch(receiveEventClassData(response));
     })
     .catch(error => {
       if(error.response.status === 401) {
@@ -152,7 +153,7 @@ export function postEventClassData(token, data) {
     .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
-      dispatch(receiveEventClassData(response.data));
+      dispatch(receiveEventClassData(response));
     })
     .catch(error => {
       if(erros.response.status === 401) {
@@ -162,3 +163,11 @@ export function postEventClassData(token, data) {
   }
 }
 
+export function selectEventClass(id) {
+  return {
+    type: SELECT_EVENT_CLASS,
+    payload: {
+      data: id
+    }
+  }
+}
