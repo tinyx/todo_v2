@@ -1,10 +1,10 @@
 import React from 'react';
-import CircularProgress from 'material-ui/lib/circular-progress';
-import Colors from 'material-ui/lib/styles/colors';
-import FontIcon from 'material-ui/lib/font-icon';
-import Paper from 'material-ui/lib/paper';
-import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
+import CircularProgress from 'material-ui/CircularProgress';
+import {grey700} from 'material-ui/styles/colors';
+import FontIcon from 'material-ui/FontIcon';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 
 const style = {
@@ -55,20 +55,25 @@ const LoginForm = React.createClass({
   onSubmit(e) {
     this.props.onSubmit(this.state.email, this.state.password);
   },
+  onTextFieldKeyDown(e) {
+    if(e.which === 13) {
+      this.onSubmit();
+    }
+  },
   render() {
     return (
       <div>
         <Paper style={style.paper} zDepth={3}>
-          <FontIcon className="material-icons" style={style.fontIcon} color={Colors.grey700}>account_circle</FontIcon>
+          <FontIcon className="material-icons" style={style.fontIcon} color={grey700}>account_circle</FontIcon>
           <TextField hintText="Email" style={style.textField} 
-            onChange={this.onEmailChange} onEnterKeyDown={this.onSubmit}
+            onChange={this.onEmailChange} onKeyDown={this.onTextFieldKeyDown}
             errorText={this.props.emailError}/>
           <TextField hintText="Password" type="password" 
-            onChange={this.onPasswordChange} onEnterKeyDown={this.onSubmit}
+            onChange={this.onPasswordChange} onKeyDown={this.onTextFieldKeyDown}
             errorText={this.props.passwordError}/>
           <div style={style.nonFieldError}>{this.props.nonFieldError}</div>
           {this.props.isAuthenticating ? <CircularProgress style={style.circularProgress} size={.7}/> :
-            <RaisedButton label="Login" secondary={true} style={style.raisedButton} onMouseDown={this.onSubmit}/>
+            <RaisedButton label="Login" primary={true} style={style.raisedButton} onMouseDown={this.onSubmit}/>
           }
         </Paper>
       </div>

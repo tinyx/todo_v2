@@ -7,10 +7,13 @@ const style = {
 };
 
 const Dashboard = React.createClass({
+  propTypes: {
+    onLogout: React.PropTypes.func.isRequired
+  },
   render() {
     return (
       <div>
-        <TopBar/>
+        <TopBar onLogout={this.props.onLogout}/>
       </div>
   )}
 })

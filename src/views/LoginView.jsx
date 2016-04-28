@@ -5,7 +5,8 @@ import { loginUser } from '../lib/actions/authentication';
 
 const LoginView = React.createClass({
   propTypes: {
-    isAuthenticated: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    onSubmit: PropTypes.func.isRequired
   },
   render() {
     return (

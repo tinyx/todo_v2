@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 const HomeView = React.createClass({
@@ -21,7 +23,9 @@ const HomeView = React.createClass({
   render() {
     return (
       <div>
-        {this.props.children}
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          {this.props.children}
+        </MuiThemeProvider>
       </div>
     );
   }

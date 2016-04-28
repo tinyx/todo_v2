@@ -17,7 +17,10 @@ export default createReducer(initialState, {
   [LOGIN_USER_REQUEST]: (state, payload) => {
     return Object.assign({}, state, {
       'isAuthenticating': true,
-      'statusText': null
+      'statusText': null,
+      'emailError': null,
+      'passwordError': null,
+      'nonFieldError': null
     });
   },
   [LOGIN_USER_SUCCESS]: (state, payload) => {
@@ -26,7 +29,10 @@ export default createReducer(initialState, {
       'isAuthenticated': true,
       'token': payload.token,
       'userName': jwtDecode(payload.token).userName,
-      'statusText': 'You have been successfully logged in.'
+      'statusText': 'You have been successfully logged in.',
+      'emailError': null,
+      'passwordError': null,
+      'nonFieldError': null
     });
 
   },
@@ -47,7 +53,10 @@ export default createReducer(initialState, {
       'isAuthenticated': false,
       'token': null,
       'userName': null,
-      'statusText': 'You have been successfully logged out.'
+      'statusText': 'You have been successfully logged out.',
+      'emailError': null,
+      'passwordError': null,
+      'nonFieldError': null
     });
   }
 });

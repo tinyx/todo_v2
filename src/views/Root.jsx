@@ -6,11 +6,15 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import LoginView from './LoginView';
 import DashboardView from './DashboardView';
 import HomeView from './HomeView';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
+
+injectTapEventPlugin();
 
 export default class Root extends React.Component {
   render () {
     const history = syncHistoryWithStore(browserHistory, this.props.store);
+
     return (
       <div>
         <Provider store={this.props.store}>
