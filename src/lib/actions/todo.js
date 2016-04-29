@@ -152,7 +152,7 @@ export function postEventClassData(token, data) {
       dispatch(receiveEventClassData(response));
     })
     .catch(error => {
-      if(erros.response.status === 401) {
+      if(error.response.status === 401) {
         dispatch(loginUserFailure(error));
       }
     })
