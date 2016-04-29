@@ -19,6 +19,7 @@ const TopBar = React.createClass({
     return (
       <AppBar
         title="Todo List v2"
+        showMenuIconButton={false}
         iconElementRight={
           <IconMenu
             iconButtonElement={

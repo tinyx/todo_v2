@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import Dashboard from '../lib/components/Dashboard';
 import { logoutAndRedirect } from '../lib/actions/authentication';
-import { getEventClassData, selectEventClass } from '../lib/actions/todo';
+import { getEventClassData, selectEventClass, getEventData } from '../lib/actions/todo';
 
 
 const DashboardView = React.createClass({
@@ -17,13 +17,15 @@ const DashboardView = React.createClass({
   },
   componentDidMount() {
     this.props.getClasses(this.props.token);
+    this.props.getEvents(this.props.token);
   },
   render() {
+    let events = this.props.events.filter(e => e.eventclass === this.props.currentClass);
     return (
       <div>
-        <Dashboard onLogout={this.props.onLogout}
-          classes={this.props.classes} currentClass={this.props.currentClass}
-          onClassClick={this.props.onClassClick}
+        <Dashboard classes={this.props.classes} currentClass={this.props.currentClass}
+          events={events} isFetchingData={this.props.isFetchingData}
+          onClassClick={this.props.onClassClick} onLogout={this.props.onLogout}
           />
       </div>
     );
@@ -35,7 +37,9 @@ export default connect(
     isAuthenticated: state.auth.isAuthenticated,
     token: state.auth.token,
     classes: state.todo.classes,
-    currentClass: state.todo.currentClass
+    events: state.todo.events,
+    currentClass: state.todo.currentClass,
+    isFetchingData: state.todo.fetchingEventData || state.todo.fetchingClassData
   }),
   dispatch => ({
     onLogout: () => {
@@ -44,10 +48,11 @@ export default connect(
     getClasses: (token) => {
       dispatch(getEventClassData(token));
     },
+    getEvents: (token) => {
+      dispatch(getEventData(token));
+    },
     onClassClick: (id) => {
-      dispatch(selectEventClass({
-        data: id
-      }));
+      dispatch(selectEventClass(id));
     }
   })
 )(DashboardView);

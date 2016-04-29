@@ -22,9 +22,7 @@ import {checkHttpStatus, parseJSON} from '../utils'
 export function receiveEventData(data) {
   return {
     type: RECEIVE_EVENT_DATA,
-    payload: {
-        data: data
-    }
+    payload: data
   }
 }
 
@@ -47,7 +45,7 @@ export function getEventData(token) {
     .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
-      dispatch(receiveEventData(response.data));
+      dispatch(receiveEventData(response));
     })
     .catch(error => {
       if(error.response.status === 401) {
@@ -79,7 +77,7 @@ export function postEventData(token, data) {
     .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
-      dispatch(receiveEventData(response.data));
+      dispatch(receiveEventData(response));
     })
     .catch(error => {
       if(erros.response.status === 401) {
@@ -96,9 +94,7 @@ export function postEventData(token, data) {
 export function receiveEventClassData(data) {
   return {
     type: RECEIVE_EVENT_CLASS_DATA,
-    payload: {
-        data: data
-    }
+    payload: data
   }
 }
 
@@ -166,8 +162,6 @@ export function postEventClassData(token, data) {
 export function selectEventClass(id) {
   return {
     type: SELECT_EVENT_CLASS,
-    payload: {
-      data: id
-    }
+    payload: id
   }
 }

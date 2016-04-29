@@ -45,12 +45,14 @@ SelectableList = wrapState(SelectableList);
 var ClassNavBar = React.createClass({
   propTypes: {
     classes: React.PropTypes.array.isRequired,
-    currentClass: React.PropTypes.number.isRequired,
     onClassClick: React.PropTypes.func.isRequired
   },
   styles: {
     placeholder: {
       height: '65px'
+    },
+    divider: {
+      marginBottom: '10px'
     },
     iconStyles: {
       marginRight: '10px',
@@ -88,9 +90,8 @@ var ClassNavBar = React.createClass({
           disabled={true}
           style={this.styles.classesLabel}
         />
-        <Divider style={{marginBottom: '10px'}}/>
-        <SelectableList defaultValue={1}
-          value={value}>
+        <Divider style={this.styles.divider}/>
+        <SelectableList defaultValue={value+1}>
           {this.props.classes.map(c => (
             <ListItem
               key={c.id}
