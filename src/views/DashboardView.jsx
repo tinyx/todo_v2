@@ -11,13 +11,15 @@ const DashboardView = React.createClass({
   },
   propTypes: {
     isAuthenticated: PropTypes.bool.isRequired,
-    onLogout: PropTypes.func.isRequired,
     classes: PropTypes.array.isRequired,
     token: PropTypes.string.isRequired
   },
   componentDidMount() {
     this.props.getClasses(this.props.token);
     this.props.getEvents(this.props.token);
+  },
+  onRefresh() {
+    this.props.onRefresh(this.props.token);
   },
   render() {
     let events = this.props.events.filter(e => e.eventclass === this.props.currentClass);
@@ -26,6 +28,7 @@ const DashboardView = React.createClass({
         <Dashboard classes={this.props.classes} currentClass={this.props.currentClass}
           events={events} isFetchingData={this.props.isFetchingData}
           onClassClick={this.props.onClassClick} onLogout={this.props.onLogout}
+          onRefresh={this.onRefresh}
           />
       </div>
     );
@@ -44,6 +47,10 @@ export default connect(
   dispatch => ({
     onLogout: () => {
       dispatch(logoutAndRedirect());
+    },
+    onRefresh: (token) => {
+      dispatch(getEventClassData(token));
+      dispatch(getEventData(token));
     },
     getClasses: (token) => {
       dispatch(getEventClassData(token));

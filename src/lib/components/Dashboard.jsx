@@ -7,7 +7,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 const Dashboard = React.createClass({
   propTypes: {
-    onLogout: React.PropTypes.func.isRequired,
+    onLogout: React.PropTypes.func,
+    onRefresh: React.PropTypes.func,
     classes: React.PropTypes.array.isRequired,
     events: React.PropTypes.array.isRequired,
     onClassClick: React.PropTypes.func.isRequired,
@@ -15,7 +16,8 @@ const Dashboard = React.createClass({
   },
   styles: {
     linearProgress: {
-      zIndex: '1400'
+      zIndex: '1400',
+      marginTop: '-4px'
     },
     eventTable: {
       marginLeft: '270px',
@@ -25,7 +27,7 @@ const Dashboard = React.createClass({
   render() {
     return (
       <div>
-        <TopBar onLogout={this.props.onLogout}/>
+        <TopBar onLogout={this.props.onLogout} onRefresh={this.props.onRefresh}/>
         {this.props.isFetchingData === true ?
           (<LinearProgress style={this.styles.linearProgress} mode="indeterminate" />) : null
         }
