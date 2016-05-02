@@ -9,7 +9,8 @@ import MenuItem from 'material-ui/MenuItem';
 const TopBar = React.createClass({
   propTypes: {
     onLogout: React.PropTypes.func,
-    onRefresh: React.PropTypes.func
+    onRefresh: React.PropTypes.func,
+    onAbout: React.PropTypes.func
   },
   styles: {
     topBar: {
@@ -30,7 +31,7 @@ const TopBar = React.createClass({
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
             <MenuItem primaryText="Refresh" onTouchTap={this.props.onRefresh}/>
-            <MenuItem primaryText="About" />
+            <MenuItem primaryText="About" onTouchTap={this.props.onAbout}/>
             <MenuItem primaryText="Log out" onTouchTap={this.props.onLogout} />
           </IconMenu>
         }
