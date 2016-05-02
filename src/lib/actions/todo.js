@@ -13,7 +13,7 @@ import {
   SELECT_EVENT_CLASS,
   EVENT_CLASS_URL
 } from '../constants/todo'
-import {loginUserFailure} from '../actions/authentication'
+import { loginUserFailure, logoutAndRedirect } from '../actions/authentication'
 import {checkHttpStatus, parseJSON} from '../utils'
 
 
@@ -51,6 +51,9 @@ export function getEventData(token) {
       if(error.response.status === 401) {
         dispatch(loginUserFailure(error));
       }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
+      }
     })
   }
 }
@@ -82,6 +85,9 @@ export function postEventData(token, data) {
     .catch(error => {
       if(erros.response.status === 401) {
         dispatch(loginUserFailure(error));
+      }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
       }
     })
   }
@@ -123,6 +129,9 @@ export function getEventClassData(token) {
       if(error.response.status === 401) {
         dispatch(loginUserFailure(error));
       }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
+      }
     })
   }
 }
@@ -154,6 +163,9 @@ export function postEventClassData(token, data) {
     .catch(error => {
       if(error.response.status === 401) {
         dispatch(loginUserFailure(error));
+      }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
       }
     })
   }

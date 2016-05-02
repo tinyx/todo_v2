@@ -7,6 +7,7 @@ import Divider from 'material-ui/Divider';
 import DashBoard from 'material-ui/svg-icons/action/dashboard';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import TextField from 'material-ui/TextField';
 
 
 let SelectableList = MakeSelectable(List);
@@ -62,10 +63,19 @@ var ClassNavBar = React.createClass({
     classesLabel: {
       cursor: 'default'
     },
+    addClassGroup: {
+      position: 'absolute',
+      width: '90%',
+      left: '20px',
+      bottom: '20px'
+    },
+    addClassTextField: {
+      width: '75%'
+    },
     addClassButton: {
       position: 'absolute',
-      right: '20px',
-      bottom: '20px'
+      bottom: '5px',
+      right: '5px'
     }
   },
   render: function() {
@@ -101,9 +111,12 @@ var ClassNavBar = React.createClass({
             ></ListItem>
           ))}
         </SelectableList>
-        <FloatingActionButton mini={true} secondary={true} style={this.styles.addClassButton}>
-          <ContentAdd />
-        </FloatingActionButton>
+        <div style={this.styles.addClassGroup}>
+          <TextField hintText="Add New Class" style={this.styles.addClassTextField}/>
+          <FloatingActionButton mini={true} primary={true} style={this.styles.addClassButton}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </div>
       </Drawer>
     )
   }

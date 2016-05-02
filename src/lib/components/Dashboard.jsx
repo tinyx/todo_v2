@@ -21,7 +21,8 @@ const Dashboard = React.createClass({
     },
     eventTable: {
       marginLeft: '270px',
-      marginTop: '15px'
+      marginTop: '15px',
+      width: 'calc(100% - 270px)'
     }
   },
   render() {

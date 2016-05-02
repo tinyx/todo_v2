@@ -3,7 +3,40 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 const EventTable = React.createClass({
   styles: {
-    
+    headers: {
+      todoEvent: {
+        width: '60%'
+      },
+      priority: {
+        width: '10%'
+      },
+      dueDate: {
+        width: '10%'
+      },
+      status: {
+        width: '10%'
+      },
+      editIcon: {
+        width: '10%'
+      }
+    },
+    columns: {
+      todoEvent: {
+        width: '60%'
+      },
+      priority: {
+        width: '10%'
+      },
+      dueDate: {
+        width: '10%'
+      },
+      status: {
+        width: '10%'
+      },
+      editIcon: {
+        width: '10%'
+      }
+    }
   },
   propTypes: {
     events: React.PropTypes.array.isRequired
@@ -13,19 +46,21 @@ const EventTable = React.createClass({
       <Table style={this.props.style}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
-            <TableHeaderColumn>Todo Event</TableHeaderColumn>
-            <TableHeaderColumn>Priority</TableHeaderColumn>
-            <TableHeaderColumn>Due Date</TableHeaderColumn>
-            <TableHeaderColumn>Status</TableHeaderColumn>
+            <TableHeaderColumn style={this.styles.headers.todoEvent}>Todo Event</TableHeaderColumn>
+            <TableHeaderColumn style={this.styles.headers.priority}>Priority</TableHeaderColumn>
+            <TableHeaderColumn style={this.styles.headers.dueDate}>Due Date</TableHeaderColumn>
+            <TableHeaderColumn style={this.styles.headers.status}>Status</TableHeaderColumn>
+            <TableHeaderColumn style={this.styles.headers.editIcon}>Edit</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
           {this.props.events.map(e => (
             <TableRow key={e.id}>
-              <TableRowColumn>{e.content}</TableRowColumn>
-              <TableRowColumn>{e.priority}</TableRowColumn>
-              <TableRowColumn>{e.duedate}</TableRowColumn>
-              <TableRowColumn>{e.done === true ? 'Done' : 'In progress'}</TableRowColumn>
+              <TableRowColumn style={this.styles.columns.todoEvent}>{e.content}</TableRowColumn>
+              <TableRowColumn style={this.styles.columns.priority}>{e.priority}</TableRowColumn>
+              <TableRowColumn style={this.styles.columns.dueDate}>{e.duedate}</TableRowColumn>
+              <TableRowColumn style={this.styles.columns.status}>{e.done === true ? 'Done' : 'In progress'}</TableRowColumn>
+              <TableRowColumn style={this.styles.columns.editIcon}></TableRowColumn>
             </TableRow>
           ))}
         </TableBody>
