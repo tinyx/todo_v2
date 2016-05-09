@@ -157,8 +157,8 @@ export function postEventClassData(token, data) {
     })
     .then(checkHttpStatus)
     .then(parseJSON)
-    .then(response => {
-      dispatch(receiveEventClassData(response));
+    .then(() => {
+      dispatch(getEventClassData(token));
     })
     .catch(error => {
       if(error.response.status === 401) {

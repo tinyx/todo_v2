@@ -45,8 +45,9 @@ SelectableList = wrapState(SelectableList);
 
 var ClassNavBar = React.createClass({
   propTypes: {
-    classes: React.PropTypes.array.isRequired,
-    onClassClick: React.PropTypes.func.isRequired
+    classes: React.PropTypes.array,
+    onClassClick: React.PropTypes.func,
+    onNewClass: React.PropTypes.func
   },
   styles: {
     placeholder: {
@@ -77,6 +78,17 @@ var ClassNavBar = React.createClass({
       bottom: '5px',
       right: '5px'
     }
+  },
+  componentWillMount() {
+    this.setState({
+      newClassName: '',
+    });
+  },
+  onNewClassNameChange(e) {
+    this.setState({ newClassName: e.target.value });
+  },
+  onNewClass() {
+    this.props.onNewClass(this.state.newClassName);
   },
   render: function() {
     var selectedClassId = this.props.currentClass;
@@ -112,8 +124,11 @@ var ClassNavBar = React.createClass({
           ))}
         </SelectableList>
         <div style={this.styles.addClassGroup}>
-          <TextField hintText="Add New Class" style={this.styles.addClassTextField}/>
-          <FloatingActionButton mini={true} primary={true} style={this.styles.addClassButton}>
+          <TextField hintText="Add New Class" style={this.styles.addClassTextField}
+            onChange={this.onNewClassNameChange}
+            />
+          <FloatingActionButton mini={true} primary={true}
+            style={this.styles.addClassButton} onMouseDown={this.onNewClass}>
             <ContentAdd />
           </FloatingActionButton>
         </div>

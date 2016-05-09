@@ -2,7 +2,12 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import Dashboard from '../lib/components/Dashboard';
 import { logoutAndRedirect } from '../lib/actions/authentication';
-import { getEventClassData, selectEventClass, getEventData } from '../lib/actions/todo';
+import {
+  getEventClassData,
+  postEventClassData,
+  selectEventClass,
+  getEventData
+} from '../lib/actions/todo';
 
 
 const DashboardView = React.createClass({
@@ -21,14 +26,17 @@ const DashboardView = React.createClass({
   onRefresh() {
     this.props.onRefresh(this.props.token);
   },
+  onNewClass(newClassName) {
+    this.props.onNewClass(this.props.token, newClassName);
+  },
   render() {
     let events = this.props.events.filter(e => e.eventclass === this.props.currentClass);
     return (
       <div>
         <Dashboard classes={this.props.classes} currentClass={this.props.currentClass}
           events={events} isFetchingData={this.props.isFetchingData}
-          onClassClick={this.props.onClassClick} onLogout={this.props.onLogout}
-          onRefresh={this.onRefresh}
+          onClassClick={this.props.onClassClick} onNewClass={this.onNewClass}
+          onLogout={this.props.onLogout} onRefresh={this.onRefresh}
           />
       </div>
     );
@@ -60,6 +68,11 @@ export default connect(
     },
     onClassClick: (id) => {
       dispatch(selectEventClass(id));
+    },
+    onNewClass: (token, newClassName) => {
+      dispatch(postEventClassData(token, {
+        name: newClassName
+      }));
     }
   })
 )(DashboardView);
