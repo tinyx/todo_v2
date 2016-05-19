@@ -16,29 +16,17 @@ import TextField from 'material-ui/TextField';
 import {grey400} from 'material-ui/styles/colors';
 
 
-let SelectableList = MakeSelectable(List);
-
 function wrapState(ComposedComponent) {
   return React.createClass({
     propTypes: {
       children: React.PropTypes.node.isRequired,
-      defaultValue: React.PropTypes.number.isRequired,
-    },
-    componentWillMount() {
-      this.setState({
-        selectedIndex: this.props.defaultValue,
-      });
-    },
-    handleRequestChange(event, index) {
-      this.setState({
-        selectedIndex: index,
-      });
+      selectedIndex: React.PropTypes.number.isRequired,
     },
     render() {
       return (
         <ComposedComponent
-          value={this.state.selectedIndex}
-          onChange={this.handleRequestChange}
+          value={this.props.selectedIndex}
+          onChange={x => {}}
         >
           {this.props.children}
         </ComposedComponent>
@@ -47,6 +35,7 @@ function wrapState(ComposedComponent) {
   })
 }
 
+let SelectableList = MakeSelectable(List);
 SelectableList = wrapState(SelectableList);
 
 var ClassNavBar = React.createClass({
@@ -87,8 +76,8 @@ var ClassNavBar = React.createClass({
       right: '5px'
     },
     editClassDialog: {
-      width: '50%',
-      left: '25%'
+      width: '40%',
+      margin: 'auto'
     },
     editClassTextField: {
       display: 'block'
@@ -110,6 +99,11 @@ var ClassNavBar = React.createClass({
   onNewClass() {
     this.props.onNewClass(this.state.newClassName);
     this.setState({newClassName: ''});
+  },
+  onNewClassKeyDown(e) {
+    if(e.which === 13) {
+      this.onNewClass();
+    }
   },
   onEditClass(eventClassId, eventClassName) {
     this.setState({
@@ -149,17 +143,6 @@ var ClassNavBar = React.createClass({
     this.onCloseDeleteClass();
   },
   render: function() {
-    var selectedClassId = this.props.currentClass;
-    var classes = this.props.classes;
-    var value = 0;
-    if(selectedClassId !== null && classes.length > 0) {
-      for(var i=0; i<classes.length; i++) {
-        if(classes[i].id === selectedClassId) {
-          value = i;
-          break;
-        }
-      }
-    }
     return (
       <Drawer>
         <div style={this.styles.placeholder}>
@@ -171,7 +154,8 @@ var ClassNavBar = React.createClass({
           style={this.styles.classesLabel}
         />
         <Divider style={this.styles.divider}/>
-        <SelectableList defaultValue={value+1}>
+        <SelectableList
+          selectedIndex={this.props.currentClass}>
           {this.props.classes.map(c => (
             <ListItem
               className='event-class-item'
@@ -198,7 +182,8 @@ var ClassNavBar = React.createClass({
         </SelectableList>
         <div style={this.styles.addClassGroup}>
           <TextField hintText="Add New Class" style={this.styles.addClassTextField}
-            onChange={this.onNewClassNameChange}
+            onChange={this.onNewClassNameChange} value={this.state.newClassName}
+            onKeyDown={this.onNewClassKeyDown}
             />
           <FloatingActionButton mini={true} primary={true}
             style={this.styles.addClassButton} onMouseDown={this.onNewClass}>
@@ -208,9 +193,9 @@ var ClassNavBar = React.createClass({
         <div>
           <Dialog
             title="Edit Event Class"
-            modal={false}
             open={this.state.editDialogOpen}
-            style={this.styles.editClassDialog}
+            contentStyle={this.styles.editClassDialog}
+            onRequestClose={this.onCloseEditClass}
             actions={[
               <FlatButton
                 label="Cancel"
@@ -233,11 +218,13 @@ var ClassNavBar = React.createClass({
               onChange={this.onEditClassNameChange}
               />
           </Dialog>
+        </div>
+        <div>
           <Dialog
             title="Delete Event Class"
-            modal={false}
             open={this.state.deleteDialogOpen}
-            style={this.styles.editClassDialog}
+            contentStyle={this.styles.editClassDialog}
+            onRequestClose={this.onCloseDeleteClass}
             actions={[
               <FlatButton
                 label="Cancel"

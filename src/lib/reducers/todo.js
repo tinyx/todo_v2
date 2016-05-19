@@ -32,7 +32,10 @@ export default createReducer(initialState, {
   },
   [RECEIVE_EVENT_CLASS_DATA]: (state, payload) => {
     let currentClass;
-    if(state.currentClass === null && payload.length > 0) {
+    if(
+      (state.currentClass === null ||
+       payload.find(x => x['id'] === state.currentClass) === undefined)
+      && payload.length > 0) {
       currentClass = payload[0].id;
     }
     else {
