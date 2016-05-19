@@ -171,6 +171,74 @@ export function postEventClassData(token, data) {
   }
 }
 
+export function putEventClassDataRequest() {
+  return {
+    type: PUT_EVENT_CLASS_DATA_REQUEST,
+  }
+}
+
+export function putEventClassData(token, classId, data) {
+  return (dispatch, state) => {
+    dispatch(putEventClassDataRequest());
+    return fetch(EVENT_CLASS_URL + classId + '/', {
+      method: 'PUT',
+      credentials: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `JWT ${token}`
+      },
+      body: JSON.stringify(data)
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(() => {
+      dispatch(getEventClassData(token));
+    })
+    .catch(error => {
+      if(error.response.status === 401) {
+        dispatch(loginUserFailure(error));
+      }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
+      }
+    })
+  }
+}
+
+export function deleteEventClassDataRequest() {
+  return {
+    type: DELETE_EVENT_CLASS_DATA_REQUEST,
+  }
+}
+
+export function deleteEventClassData(token, classId) {
+  return (dispatch, state) => {
+    dispatch(deleteEventClassDataRequest());
+    return fetch(EVENT_CLASS_URL + classId + '/', {
+      method: 'DELETE',
+      credentials: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `JWT ${token}`
+      }
+    })
+    .then(checkHttpStatus)
+    .then(() => {
+      dispatch(getEventClassData(token));
+    })
+    .catch(error => {
+      if(error.response.status === 401) {
+        dispatch(loginUserFailure(error));
+      }
+      else if(error.response.status === 403) {
+        dispatch(logoutAndRedirect());
+      }
+    })
+  }
+}
+
 export function selectEventClass(id) {
   return {
     type: SELECT_EVENT_CLASS,

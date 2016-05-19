@@ -49,6 +49,21 @@ export default createReducer(initialState, {
       'currentClass': payload
     });
   },
+  [POST_EVENT_CLASS_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingClassData': true
+    });
+  },
+  [PUT_EVENT_CLASS_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingClassData': true
+    });
+  },
+  [DELETE_EVENT_CLASS_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingClassData': true
+    })
+  },
   [GET_EVENT_DATA_REQUEST]: (state, payload) => {
     return Object.assign({}, state, {
       'fetchingEventData': true

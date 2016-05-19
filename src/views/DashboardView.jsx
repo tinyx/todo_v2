@@ -5,6 +5,8 @@ import { logoutAndRedirect } from '../lib/actions/authentication';
 import {
   getEventClassData,
   postEventClassData,
+  putEventClassData,
+  deleteEventClassData,
   selectEventClass,
   getEventData
 } from '../lib/actions/todo';
@@ -29,6 +31,12 @@ const DashboardView = React.createClass({
   onNewClass(newClassName) {
     this.props.onNewClass(this.props.token, newClassName);
   },
+  onEditClass(classId, className) {
+    this.props.onEditClass(this.props.token, classId, className);
+  },
+  onDeleteClass(classId) {
+    this.props.onDeleteClass(this.props.token, classId);
+  },
   render() {
     let events = this.props.events.filter(e => e.eventclass === this.props.currentClass);
     return (
@@ -36,6 +44,7 @@ const DashboardView = React.createClass({
         <Dashboard classes={this.props.classes} currentClass={this.props.currentClass}
           events={events} isFetchingData={this.props.isFetchingData}
           onClassClick={this.props.onClassClick} onNewClass={this.onNewClass}
+          onEditClass={this.onEditClass} onDeleteClass={this.onDeleteClass}
           onLogout={this.props.onLogout} onRefresh={this.onRefresh}
           />
       </div>
@@ -73,6 +82,14 @@ export default connect(
       dispatch(postEventClassData(token, {
         name: newClassName
       }));
+    },
+    onEditClass: (token, classId, className) => {
+      dispatch(putEventClassData(token, classId, {
+        name: className
+      }));
+    },
+    onDeleteClass: (token, classId) => {
+      dispatch(deleteEventClassData(token, classId));
     }
   })
 )(DashboardView);

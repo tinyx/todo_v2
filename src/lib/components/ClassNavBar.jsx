@@ -1,13 +1,19 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { List, ListItem, MakeSelectable } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import DashBoard from 'material-ui/svg-icons/action/dashboard';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
+import {grey400} from 'material-ui/styles/colors';
 
 
 let SelectableList = MakeSelectable(List);
@@ -47,7 +53,9 @@ var ClassNavBar = React.createClass({
   propTypes: {
     classes: React.PropTypes.array,
     onClassClick: React.PropTypes.func,
-    onNewClass: React.PropTypes.func
+    onNewClass: React.PropTypes.func,
+    onEditClass: React.PropTypes.func,
+    onDeleteClass: React.PropTypes.func
   },
   styles: {
     placeholder: {
@@ -77,11 +85,23 @@ var ClassNavBar = React.createClass({
       position: 'absolute',
       bottom: '5px',
       right: '5px'
+    },
+    editClassDialog: {
+      width: '50%',
+      left: '25%'
+    },
+    editClassTextField: {
+      display: 'block'
     }
   },
   componentWillMount() {
     this.setState({
       newClassName: '',
+      editDialogOpen: false,
+      editingEventClassId: '',
+      editingEventClassName: '',
+      deleteDialogOpen: false,
+      deletingEventClassId: ''
     });
   },
   onNewClassNameChange(e) {
@@ -89,6 +109,44 @@ var ClassNavBar = React.createClass({
   },
   onNewClass() {
     this.props.onNewClass(this.state.newClassName);
+    this.setState({newClassName: ''});
+  },
+  onEditClass(eventClassId, eventClassName) {
+    this.setState({
+      editDialogOpen: true,
+      editingEventClassId: eventClassId,
+      editingEventClassName: eventClassName
+    })
+  },
+  onEditClassNameChange(e) {
+    this.setState({ editingEventClassName: e.target.value });
+  },
+  onCloseEditClass() {
+    this.setState({
+      editDialogOpen: false,
+      editingEventClassId: '',
+      editingEventClassName: ''
+    })
+  },
+  onSaveEditClass() {
+    this.props.onEditClass(this.state.editingEventClassId, this.state.editingEventClassName);
+    this.onCloseEditClass();
+  },
+  onDeleteClass(eventClassId) {
+    this.setState({
+      deleteDialogOpen: true,
+      deletingEventClassId: eventClassId
+    })
+  },
+  onCloseDeleteClass() {
+    this.setState({
+      deleteDialogOpen: false,
+      deletingEventClassId: ''
+    })
+  },
+  onConfirmDeleteClass() {
+    this.props.onDeleteClass(this.state.deletingEventClassId);
+    this.onCloseDeleteClass();
   },
   render: function() {
     var selectedClassId = this.props.currentClass;
@@ -116,12 +174,27 @@ var ClassNavBar = React.createClass({
         <SelectableList defaultValue={value+1}>
           {this.props.classes.map(c => (
             <ListItem
+              className='event-class-item'
               key={c.id}
               value={c.id}
               primaryText={c.name}
-              onClick={() => this.props.onClassClick(c.id)}
-            ></ListItem>
-          ))}
+              onTouchTap={() => this.props.onClassClick(c.id)}
+              rightIconButton={(
+                <IconMenu
+                  className='event-class-item-icon'
+                  iconButtonElement={(
+                      <IconButton touch={true}>
+                        <MoreVertIcon/>
+                      </IconButton>)}>
+                  <MenuItem
+                    onTouchTap={() => this.onEditClass(c.id, c.name)}
+                    >Edit</MenuItem>
+                  <MenuItem
+                    onTouchTap={() => this.onDeleteClass(c.id)}
+                    >Delete</MenuItem>
+                </IconMenu>
+              )}
+              ></ListItem>))}
         </SelectableList>
         <div style={this.styles.addClassGroup}>
           <TextField hintText="Add New Class" style={this.styles.addClassTextField}
@@ -131,6 +204,56 @@ var ClassNavBar = React.createClass({
             style={this.styles.addClassButton} onMouseDown={this.onNewClass}>
             <ContentAdd />
           </FloatingActionButton>
+        </div>
+        <div>
+          <Dialog
+            title="Edit Event Class"
+            modal={false}
+            open={this.state.editDialogOpen}
+            style={this.styles.editClassDialog}
+            actions={[
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.onCloseEditClass}
+              />,
+              <FlatButton
+                label="Save"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.onSaveEditClass}
+              />,
+            ]}
+          >
+            Edit the name of the event class.
+            <TextField
+              hintText="Event Class Name"
+              style={this.styles.editClassTextField}
+              defaultValue={this.state.editingEventClassName}
+              onChange={this.onEditClassNameChange}
+              />
+          </Dialog>
+          <Dialog
+            title="Delete Event Class"
+            modal={false}
+            open={this.state.deleteDialogOpen}
+            style={this.styles.editClassDialog}
+            actions={[
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.onCloseDeleteClass}
+              />,
+              <FlatButton
+                label="Confirm"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.onConfirmDeleteClass}
+              />,
+            ]}
+          >
+            Are you sure you want to delete this event class?
+          </Dialog>
         </div>
       </Drawer>
     )

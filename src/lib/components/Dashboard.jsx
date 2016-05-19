@@ -20,6 +20,8 @@ const Dashboard = React.createClass({
     events: React.PropTypes.array.isRequired,
     onClassClick: React.PropTypes.func,
     onNewClass: React.PropTypes.func,
+    onEditClass: React.PropTypes.func,
+    onDeleteClass: React.PropTypes.func,
     isFetchingData: React.PropTypes.bool,
   },
   styles: {
@@ -51,7 +53,8 @@ const Dashboard = React.createClass({
           (<LinearProgress style={this.styles.linearProgress} mode="indeterminate" />) : null
         }
         <ClassNavBar classes={this.props.classes} onClassClick={this.props.onClassClick}
-          onNewClass={this.props.onNewClass} currentClass={this.props.currentClass}/>
+          onNewClass={this.props.onNewClass} currentClass={this.props.currentClass}
+          onEditClass={this.props.onEditClass} onDeleteClass={this.props.onDeleteClass}/>
         <EventTable events={this.props.events} style={this.styles.eventTable}/>
         <Snackbar
           open={this.state.aboutOpen}
