@@ -20,7 +20,7 @@ function wrapState(ComposedComponent) {
   return React.createClass({
     propTypes: {
       children: React.PropTypes.node.isRequired,
-      selectedIndex: React.PropTypes.number.isRequired,
+      selectedIndex: React.PropTypes.number,
     },
     render() {
       return (
@@ -240,6 +240,7 @@ var ClassNavBar = React.createClass({
             ]}
           >
             Are you sure you want to delete this event class?
+            You will lose all the events under this class too.
           </Dialog>
         </div>
       </Drawer>
