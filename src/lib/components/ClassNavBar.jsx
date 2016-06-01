@@ -139,8 +139,8 @@ var ClassNavBar = React.createClass({
     })
   },
   onConfirmDeleteClass() {
-    this.props.onDeleteClass(this.state.deletingEventClassId);
     this.onCloseDeleteClass();
+    this.props.onDeleteClass(this.state.deletingEventClassId);
   },
   render: function() {
     return (

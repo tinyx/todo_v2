@@ -22,6 +22,9 @@ const Dashboard = React.createClass({
     onNewClass: React.PropTypes.func,
     onEditClass: React.PropTypes.func,
     onDeleteClass: React.PropTypes.func,
+    onNewEvent: React.PropTypes.func,
+    onEditEvent: React.PropTypes.func,
+    onDeleteEvent: React.PropTypes.func,
     isFetchingData: React.PropTypes.bool,
   },
   styles: {
@@ -55,7 +58,10 @@ const Dashboard = React.createClass({
         <ClassNavBar classes={this.props.classes} onClassClick={this.props.onClassClick}
           onNewClass={this.props.onNewClass} currentClass={this.props.currentClass}
           onEditClass={this.props.onEditClass} onDeleteClass={this.props.onDeleteClass}/>
-        <EventTable events={this.props.events} style={this.styles.eventTable}/>
+        <EventTable events={this.props.events} style={this.styles.eventTable}
+          onNewEvent={this.props.onNewEvent} onEditEvent={this.props.onEditEvent}
+          onDeleteEvent={this.props.onDeleteEvent}
+          />
         <Snackbar
           open={this.state.aboutOpen}
           message="Todo v2.0, powered by modern frontend technologies"

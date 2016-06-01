@@ -1,9 +1,9 @@
 body {
   margin: 0;
 }
-.event-class-item-icon {
+.event-class-item-icon, .event-item-icon {
   opacity: 0;
 }
-.event-class-item:hover .event-class-item-icon {
+.event-class-item:hover .event-class-item-icon, .event-item:hover .event-item-icon {
   opacity: 1;
 }

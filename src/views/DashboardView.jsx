@@ -8,7 +8,10 @@ import {
   putEventClassData,
   deleteEventClassData,
   selectEventClass,
-  getEventData
+  getEventData,
+  postEventData,
+  putEventData,
+  deleteEventData
 } from '../lib/actions/todo';
 
 
@@ -37,6 +40,15 @@ const DashboardView = React.createClass({
   onDeleteClass(classId) {
     this.props.onDeleteClass(this.props.token, classId);
   },
+  onNewEvent() {
+
+  },
+  onEditEvent(eventId, eventData) {
+    this.props.onEditEvent(this.props.token, eventId, eventData);
+  },
+  onDeleteEvent(eventId) {
+    this.props.onDeleteEvent(this.props.token, eventId);
+  },
   render() {
     let events = this.props.events.filter(e => e.eventclass === this.props.currentClass);
     return (
@@ -45,6 +57,8 @@ const DashboardView = React.createClass({
           events={events} isFetchingData={this.props.isFetchingData}
           onClassClick={this.props.onClassClick} onNewClass={this.onNewClass}
           onEditClass={this.onEditClass} onDeleteClass={this.onDeleteClass}
+          onNewEvent={this.onNewEvent} onEditEvent={this.onEditEvent}
+          onDeleteEvent={this.onDeleteEvent}
           onLogout={this.props.onLogout} onRefresh={this.onRefresh}
           />
       </div>
@@ -72,9 +86,6 @@ export default connect(
     getClasses: (token) => {
       dispatch(getEventClassData(token));
     },
-    getEvents: (token) => {
-      dispatch(getEventData(token));
-    },
     onClassClick: (id) => {
       dispatch(selectEventClass(id));
     },
@@ -90,6 +101,16 @@ export default connect(
     },
     onDeleteClass: (token, classId) => {
       dispatch(deleteEventClassData(token, classId));
+    },
+    getEvents: (token) => {
+      dispatch(getEventData(token));
+    },
+    onNewEvent: () => {},
+    onEditEvent: (token, eventId, eventData) => {
+      dispatch(putEventData(token, eventId, eventData));
+    },
+    onDeleteEvent: (token, eventId) => {
+      dispatch(deleteEventData(token, eventId));
     }
   })
 )(DashboardView);

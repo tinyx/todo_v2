@@ -25,6 +25,7 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
+  //Event Classes
   [GET_EVENT_CLASS_DATA_REQUEST]: (state, payload) => {
     return Object.assign({}, state, {
       'fetchingClassData': true
@@ -67,6 +68,8 @@ export default createReducer(initialState, {
       'fetchingClassData': true
     })
   },
+
+  // Events
   [GET_EVENT_DATA_REQUEST]: (state, payload) => {
     return Object.assign({}, state, {
       'fetchingEventData': true
@@ -76,6 +79,21 @@ export default createReducer(initialState, {
     return Object.assign({}, state, {
       'fetchingEventData': false,
       'events': payload,
+    });
+  },
+  [POST_EVENT_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingEventData': true
+    });
+  },
+  [PUT_EVENT_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingEventData': true
+    });
+  },
+  [DELETE_EVENT_DATA_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      'fetchingEventData': true
     });
   }
 });
