@@ -40,8 +40,9 @@ const DashboardView = React.createClass({
   onDeleteClass(classId) {
     this.props.onDeleteClass(this.props.token, classId);
   },
-  onNewEvent() {
-
+  onNewEvent(eventData) {
+    let updatedEventData = Object.assign({}, eventData, {eventclass: this.props.currentClass});
+    this.props.onNewEvent(this.props.token, updatedEventData);
   },
   onEditEvent(eventId, eventData) {
     this.props.onEditEvent(this.props.token, eventId, eventData);
@@ -105,7 +106,9 @@ export default connect(
     getEvents: (token) => {
       dispatch(getEventData(token));
     },
-    onNewEvent: () => {},
+    onNewEvent: (token, eventData) => {
+      dispatch(postEventData(token, eventData));
+    },
     onEditEvent: (token, eventId, eventData) => {
       dispatch(putEventData(token, eventId, eventData));
     },

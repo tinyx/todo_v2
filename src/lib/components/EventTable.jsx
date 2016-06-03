@@ -13,6 +13,8 @@ import DatePicker from 'material-ui/DatePicker';
 import Toggle from 'material-ui/Toggle';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Dialog from 'material-ui/Dialog';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 const EventTableRow = React.createClass({
   propTypes: {
@@ -151,7 +153,6 @@ const EventTableRow = React.createClass({
               /> :
             (this.props.event.done === true ? 'Yes' : 'No')
           }
-
         </TableRowColumn>
         <TableRowColumn style={this.styles.columns.editIcon}>
           {this.state.editing === true ?
@@ -180,26 +181,26 @@ const EventTableRow = React.createClass({
           }
         </TableRowColumn>
         <Dialog
-            title="Delete Event"
-            open={this.state.deletingDialogOpen}
-            contentStyle={this.styles.deletingDialog}
-            onRequestClose={this.onCloseDeleteEvent}
-            actions={[
-              <FlatButton
-                label="Cancel"
-                primary={true}
-                onTouchTap={this.onCloseDeleteEvent}
-              />,
-              <FlatButton
-                label="Confirm"
-                primary={true}
-                keyboardFocused={true}
-                onTouchTap={this.onConfirmDeleteEvent}
-              />,
-            ]}
-          >
-            Are you sure you want to delete this event?
-          </Dialog>
+          title="Delete Event"
+          open={this.state.deletingDialogOpen}
+          contentStyle={this.styles.deletingDialog}
+          onRequestClose={this.onCloseDeleteEvent}
+          actions={[
+            <FlatButton
+              label="Cancel"
+              primary={true}
+              onTouchTap={this.onCloseDeleteEvent}
+            />,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.onConfirmDeleteEvent}
+            />,
+          ]}
+        >
+          Are you sure you want to delete this event?
+        </Dialog>
       </TableRow>
     )
   }
@@ -221,33 +222,111 @@ const EventTable = React.createClass({
       },
       editIcon: {
         width: '8%'
-      }
+      },
+    },
+    addEventButton: {
+      position: 'absolute',
+      right: '20px',
+      bottom: '20px'
+    },
+    newEventDialog: {
+      width: '60%'
     }
   },
   propTypes: {
     events: React.PropTypes.array.isRequired,
+    onNewEvent: React.PropTypes.func,
     onEditEvent: React.PropTypes.func,
     onDeleteEvent: React.PropTypes.func
   },
+  getInitialState() {
+    return {
+      newEventDialogOpen: false,
+      newContent: '',
+      newDuedate: dateFormat(new Date(), 'yyyy-mm-dd')
+    }
+  },
+  onOpenNewEventDialog() {
+    this.setState({newEventDialogOpen: true});
+  },
+  onCloseNewEventDialog() {
+    this.setState({newEventDialogOpen: false});
+  },
+  onUpdatingContent(e) {
+    this.setState({
+      newContent: e.target.value
+    });
+  },
+  onUpdatingDuedate(e, newDate) {
+    this.setState({
+      newDuedate: dateFormat(new Date(newDate), 'yyyy-mm-dd')
+    });
+  },
+  onSavingNewEvent() {
+    this.onCloseNewEventDialog();
+    this.props.onNewEvent({
+      content: this.state.newContent,
+      duedate: this.state.newDuedate
+    });
+  },
   render() {
     return (
-      <Table style={this.props.style} selectable={false}>
-        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn style={this.styles.headers.content}>Todo Event</TableHeaderColumn>
-            <TableHeaderColumn style={this.styles.headers.dueDate}>Due Date</TableHeaderColumn>
-            <TableHeaderColumn style={this.styles.headers.status}>Finished</TableHeaderColumn>
-            <TableHeaderColumn style={this.styles.headers.editIcon}></TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {this.props.events.map(e => (
-            <EventTableRow key={e.id} event={e}
-              onEditEvent={this.props.onEditEvent} onDeleteEvent={this.props.onDeleteEvent}
-              ></EventTableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div>
+        <Table style={this.props.style} selectable={false}>
+          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn style={this.styles.headers.content}>Todo Event</TableHeaderColumn>
+              <TableHeaderColumn style={this.styles.headers.dueDate}>Due Date</TableHeaderColumn>
+              <TableHeaderColumn style={this.styles.headers.status}>Finished</TableHeaderColumn>
+              <TableHeaderColumn style={this.styles.headers.editIcon}></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {this.props.events.sort((a, b) => a.id - b.id).map(e => (
+              <EventTableRow key={e.id} event={e}
+                onEditEvent={this.props.onEditEvent} onDeleteEvent={this.props.onDeleteEvent}
+                ></EventTableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <FloatingActionButton primary={true}
+          style={this.styles.addEventButton} onMouseDown={this.onOpenNewEventDialog}>
+          <ContentAdd />
+        </FloatingActionButton>
+        <Dialog
+          title="New Event Class"
+          open={this.state.newEventDialogOpen}
+          contentStyle={this.styles.newEventDialog}
+          modal={true}
+          actions={[
+            <FlatButton
+              label="Cancel"
+              primary={true}
+              onTouchTap={this.onCloseNewEventDialog}
+            />,
+            <FlatButton
+              label="Save"
+              primary={true}
+              onTouchTap={this.onSavingNewEvent}
+              keyboardFocused={true}
+            />,
+          ]}
+        >
+          Create a new event.
+          <TextField
+            name='new-event-content-textfield'
+            hintText="Event Content"
+            fullWidth={true}
+            onChange={this.onUpdatingContent}
+            />
+          <DatePicker
+            name='new-event-duedate-datepicker'
+            onChange={this.onUpdatingDuedate}
+            defaultDate={new Date()}
+            mode="landscape"
+            />
+        </Dialog>
+      </div>
     )
   }
 });

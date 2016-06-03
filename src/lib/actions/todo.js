@@ -79,8 +79,8 @@ export function postEventData(token, data) {
     })
     .then(checkHttpStatus)
     .then(parseJSON)
-    .then(response => {
-      dispatch(receiveEventData(response));
+    .then(() => {
+      dispatch(getEventData(token));
     })
     .catch(error => {
       if(erros.response.status === 401) {

@@ -73,7 +73,7 @@ var ClassNavBar = React.createClass({
     addClassButton: {
       position: 'absolute',
       bottom: '5px',
-      right: '5px'
+      right: '10px'
     },
     editClassDialog: {
       width: '40%',
@@ -156,7 +156,7 @@ var ClassNavBar = React.createClass({
         <Divider style={this.styles.divider}/>
         <SelectableList
           selectedIndex={this.props.currentClass}>
-          {this.props.classes.map(c => (
+          {this.props.classes.sort((a, b) => a.id - b.id).map(c => (
             <ListItem
               className='event-class-item'
               key={c.id}
@@ -193,6 +193,7 @@ var ClassNavBar = React.createClass({
         <div>
           <Dialog
             title="Edit Event Class"
+            modal={true}
             open={this.state.editDialogOpen}
             contentStyle={this.styles.editClassDialog}
             onRequestClose={this.onCloseEditClass}
