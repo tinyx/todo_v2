@@ -156,7 +156,7 @@ var ClassNavBar = React.createClass({
         <Divider style={this.styles.divider}/>
         <SelectableList
           selectedIndex={this.props.currentClass}>
-          {this.props.classes.sort((a, b) => a.id - b.id).map(c => (
+          {this.props.classes.map(c => (
             <ListItem
               className='event-class-item'
               key={c.id}

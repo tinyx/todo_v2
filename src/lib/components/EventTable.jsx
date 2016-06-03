@@ -282,7 +282,7 @@ const EventTable = React.createClass({
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {this.props.events.sort((a, b) => a.id - b.id).map(e => (
+            {this.props.events.map(e => (
               <EventTableRow key={e.id} event={e}
                 onEditEvent={this.props.onEditEvent} onDeleteEvent={this.props.onDeleteEvent}
                 ></EventTableRow>

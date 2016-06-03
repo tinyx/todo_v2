@@ -32,6 +32,7 @@ export default createReducer(initialState, {
     });
   },
   [RECEIVE_EVENT_CLASS_DATA]: (state, payload) => {
+    payload.sort((a, b) => a.id - b.id);
     let currentClass;
     if(
       (state.currentClass === null ||
@@ -76,6 +77,7 @@ export default createReducer(initialState, {
     });
   },
   [RECEIVE_EVENT_DATA]: (state, payload) => {
+    payload.sort((a, b) => a.id - b.id);
     return Object.assign({}, state, {
       'fetchingEventData': false,
       'events': payload,
