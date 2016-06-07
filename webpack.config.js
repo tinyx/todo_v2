@@ -1,4 +1,9 @@
+var webpack = require('webpack');
+
 var path = require('path');
+
+var production = (process.env.NODE_ENV === 'production');
+
 var config = {
   entry: path.resolve(__dirname, 'src/index'),
   output: {
@@ -23,7 +28,14 @@ var config = {
         loader: "style-loader!css-loader"
       }
     ]
-  }
+  },
+  plugins: production ? [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ] : []
 };
 
 module.exports = config;
