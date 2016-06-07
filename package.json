@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.9.1",
     "css-loader": "^0.23.1",
     "dateformat": "^1.0.12",
     "style-loader": "^0.13.1"

@@ -7,6 +7,7 @@ import LoginView from './LoginView';
 import DashboardView from './DashboardView';
 import HomeView from './HomeView';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import "babel-polyfill";
 
 
 injectTapEventPlugin();

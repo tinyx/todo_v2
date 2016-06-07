@@ -5,7 +5,7 @@ var path = require('path');
 var production = (process.env.NODE_ENV === 'production');
 
 var config = {
-  entry: path.resolve(__dirname, 'src/index'),
+  entry: ['babel-polyfill', path.resolve(__dirname, 'src/index')],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
@@ -17,14 +17,6 @@ var config = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015']
-        }
-      },
-      {
-        test: /\.js?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
