@@ -34,7 +34,6 @@ export default createReducer(initialState, {
       'passwordError': null,
       'nonFieldError': null
     });
-
   },
   [LOGIN_USER_FAILURE]: (state, payload) => {
     return Object.assign({}, state, {
