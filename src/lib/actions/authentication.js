@@ -29,7 +29,6 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-  document.cookie = '';
   return {
     type: LOGOUT_USER
   }

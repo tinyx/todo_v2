@@ -23,7 +23,7 @@ export default class Root extends React.Component {
           <div>
             <Router history={history}>
               <Route path='/' component={HomeView}>
-                <Route path='dashboard' component={DashboardView} />
+                <Route path='dashboard' component={HomeView} />
               </Route>
             </Router>
           </div>

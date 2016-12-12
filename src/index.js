@@ -22,6 +22,8 @@ let token = get_cookie('jwt_token');
 if (token !== null) {
     store.dispatch(loginUserSuccess(token));
 }
+console.log(document.cookie);
+console.log(token);
 
 ReactDOM.render(
   <Root store={store}/>,
