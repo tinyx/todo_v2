@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import { Router, Route } from 'react-router';
+import { Router, Route, Redirect } from 'react-router';
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import LoginView from './LoginView';
@@ -15,6 +15,7 @@ injectTapEventPlugin();
 export default class Root extends React.Component {
   render () {
     const history = syncHistoryWithStore(browserHistory, this.props.store);
+    let currentUrl = window.href;
 
     return (
       <div>
@@ -22,8 +23,7 @@ export default class Root extends React.Component {
           <div>
             <Router history={history}>
               <Route path='/' component={HomeView}>
-                <Route path='login' component={LoginView}/>
-                <Route path='dashboard' component={DashboardView}/>
+                <Route path='dashboard' component={DashboardView} />
               </Route>
             </Router>
           </div>

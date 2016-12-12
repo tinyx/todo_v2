@@ -12,12 +12,13 @@ const HomeView = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  componentDidMount() {
+  componentWillMount() {
     if(this.props.isAuthenticated) {
       this.context.router.push('/dashboard');
     }
     else {
-      this.context.router.push('/login');
+      let currentUrl = window.location.href;
+      window.location.href = 'http://auth.crabfactory.net/login?redirect=' + currentUrl;
     }
   },
   render() {

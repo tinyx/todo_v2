@@ -29,7 +29,7 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-  localStorage.removeItem('token');
+  document.cookie = '';
   return {
     type: LOGOUT_USER
   }
@@ -38,7 +38,8 @@ export function logout() {
 export function logoutAndRedirect() {
   return (dispatch, state) => {
     dispatch(logout());
-    dispatch(push('/login'));
+    let currentUrl = window.location.href;
+    window.location.href = 'http://auth.crabfactory.net/login?redirect=' + currentUrl;
   }
 }
 
