@@ -3,6 +3,9 @@ import { checkHttpStatus, parseJSON } from '../utils';
 import jwtDecode from 'jwt-decode';
 import { push } from 'react-router-redux'
 
+function delete_cookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
 export function loginUserSuccess(token) {
   return {
@@ -14,7 +17,7 @@ export function loginUserSuccess(token) {
 }
 
 export function loginUserFailure(error) {
-  document.cookie = '';
+  delete_cookie('jwt_token');
   return {
     type: LOGIN_USER_FAILURE,
     payload: error.response
@@ -28,7 +31,7 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-  document.cookie = '';
+  delete_cookie('jwt_token');
   return {
     type: LOGOUT_USER
   }
