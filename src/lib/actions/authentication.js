@@ -5,7 +5,6 @@ import { push } from 'react-router-redux'
 
 
 export function loginUserSuccess(token) {
-  localStorage.setItem('token', token);
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
@@ -15,7 +14,7 @@ export function loginUserSuccess(token) {
 }
 
 export function loginUserFailure(error) {
-  localStorage.removeItem('token');
+  document.cookie = '';
   return {
     type: LOGIN_USER_FAILURE,
     payload: error.response
@@ -29,13 +28,13 @@ export function loginUserRequest() {
 }
 
 export function logout() {
+  document.cookie = '';
   return {
     type: LOGOUT_USER
   }
 }
 
 export function logoutAndRedirect() {
-  document.cookie = '';
   return (dispatch, state) => {
     dispatch(logout());
     let currentUrl = window.location.href;
