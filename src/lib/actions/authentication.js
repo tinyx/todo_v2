@@ -35,6 +35,7 @@ export function logout() {
 }
 
 export function logoutAndRedirect() {
+  document.cookie = '';
   return (dispatch, state) => {
     dispatch(logout());
     let currentUrl = window.location.href;
